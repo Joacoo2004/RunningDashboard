@@ -3,57 +3,49 @@
 // Este archivo va en la raíz del proyecto y se mergea con la config global.
 //
 // ANTES DE USAR:
-// 1. Instalar engram: brew install gentleman-programming/tap/engram
-// 2. Ejecutar: engram setup opencode
-//    (esto agrega engram al opencode.json global automáticamente)
-// 3. El GitHub MCP requiere un Personal Access Token con permisos repo + read:org
+// 1. Instalar engram:
+//    git clone https://github.com/Gentleman-Programming/engram.git
+//    cd engram && go install ./cmd/engram
+//    engram setup opencode
+// 2. El GitHub MCP requiere un Personal Access Token:
+//    Crear en github.com/settings/tokens con permisos repo + read:org
+//    Agregar GITHUB_TOKEN a .env.local
 //
 // NOTA: Este archivo usa JSONC (JSON con comentarios). OpenCode lo soporta nativamente.
 
 {
-  // ─── MCP Servers ───────────────────────────────────────────────────────────
   "mcp": {
 
     // Engram — memoria persistente entre sesiones
     // El agente guarda decisiones, bugs resueltos y contexto del proyecto.
     // Herramientas: mem_save, mem_search, mem_context, mem_session_summary, etc.
-    // Instalación: brew install gentleman-programming/tap/engram
-    //              engram setup opencode
     "engram": {
       "type": "local",
-      "command": ["engram", "mcp"],
-      "enabled": true
-    },
-
-    // GitHub — acceso al repositorio desde el agente
-    // Permite leer archivos, commits, branches y PRs directamente.
-    // ADVERTENCIA: agrega tokens al contexto. Activar solo cuando sea necesario.
-    // Instalación: npx @modelcontextprotocol/server-github
-    // Token: crear en github.com/settings/tokens con permisos repo + read:org
-    "github": {
-      "type": "local",
-      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
-      },
-      "enabled": false // activar cuando se necesite contexto del repo
+      "command": ["engram", "mcp"]
     },
 
     // Context7 — documentación actualizada de librerías
     // Usar en prompts con: "use context7"
     // Útil para: Google Sheets API v4, Recharts, Next.js App Router
-    // No requiere instalación adicional.
     "context7": {
       "type": "local",
-      "command": ["npx", "-y", "@upstash/context7-mcp"],
-      "enabled": true
+      "command": ["npx", "-y", "@upstash/context7-mcp"]
     }
+
+    // GitHub — desactivado por defecto (consume muchos tokens de contexto)
+    // Para activar: descomentar el bloque y tener GITHUB_TOKEN en el entorno
+    //
+    // "github": {
+    //   "type": "local",
+    //   "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+    //   "env": {
+    //     "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+    //   }
+    // }
 
   },
 
-  // ─── Instrucciones del agente ───────────────────────────────────────────────
-  // Rutas relativas a la raíz del proyecto.
-  // OpenCode las carga y las agrega al contexto de cada sesión.
+  // OpenCode carga estos archivos y los agrega al contexto de cada sesión.
   "instructions": [
     "CLAUDE.md"
   ]
