@@ -80,6 +80,15 @@ running-dashboard/
 3. Verificar que el spec tenga estado "Aprobado"
 4. No implementar nada que no esté en el spec — si falta algo, preguntar
 
+### Después de cada tarea completada
+Persistir en Engram usando `mem_save` con:
+- Qué se implementó o resolvió
+- Por qué se tomó ese enfoque
+- Dónde están los archivos relevantes
+- Qué se aprendió o qué problemas surgieron
+
+Ejemplos de cuándo guardar: feature implementada, bug resuelto, decisión de arquitectura tomada, patrón nuevo establecido en el proyecto.
+
 ### Antes de proponer cambios de stack o arquitectura
 1. Leer los ADRs relevantes en `docs/adr/`
 2. No sugerir reemplazar tecnologías ya decididas sin justificación explícita
