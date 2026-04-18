@@ -1,0 +1,60 @@
+// opencode.jsonc — RunningDashboard
+// Configuración de OpenCode para este proyecto.
+// Este archivo va en la raíz del proyecto y se mergea con la config global.
+//
+// ANTES DE USAR:
+// 1. Instalar engram: brew install gentleman-programming/tap/engram
+// 2. Ejecutar: engram setup opencode
+//    (esto agrega engram al opencode.json global automáticamente)
+// 3. El GitHub MCP requiere un Personal Access Token con permisos repo + read:org
+//
+// NOTA: Este archivo usa JSONC (JSON con comentarios). OpenCode lo soporta nativamente.
+
+{
+  // ─── MCP Servers ───────────────────────────────────────────────────────────
+  "mcp": {
+
+    // Engram — memoria persistente entre sesiones
+    // El agente guarda decisiones, bugs resueltos y contexto del proyecto.
+    // Herramientas: mem_save, mem_search, mem_context, mem_session_summary, etc.
+    // Instalación: brew install gentleman-programming/tap/engram
+    //              engram setup opencode
+    "engram": {
+      "type": "local",
+      "command": ["engram", "mcp"],
+      "enabled": true
+    },
+
+    // GitHub — acceso al repositorio desde el agente
+    // Permite leer archivos, commits, branches y PRs directamente.
+    // ADVERTENCIA: agrega tokens al contexto. Activar solo cuando sea necesario.
+    // Instalación: npx @modelcontextprotocol/server-github
+    // Token: crear en github.com/settings/tokens con permisos repo + read:org
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "enabled": false // activar cuando se necesite contexto del repo
+    },
+
+    // Context7 — documentación actualizada de librerías
+    // Usar en prompts con: "use context7"
+    // Útil para: Google Sheets API v4, Recharts, Next.js App Router
+    // No requiere instalación adicional.
+    "context7": {
+      "type": "local",
+      "command": ["npx", "-y", "@upstash/context7-mcp"],
+      "enabled": true
+    }
+
+  },
+
+  // ─── Instrucciones del agente ───────────────────────────────────────────────
+  // Rutas relativas a la raíz del proyecto.
+  // OpenCode las carga y las agrega al contexto de cada sesión.
+  "instructions": [
+    "CLAUDE.md"
+  ]
+}
