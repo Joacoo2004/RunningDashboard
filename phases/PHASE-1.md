@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |-------|-------|
-| Estado | ⬜ Pendiente |
+| Estado | ✅ Completa |
 | Objetivo | Proyecto Next.js funcional con datos reales llegando desde Google Sheets |
 | Entregable | Dashboard en Vercel mostrando datos crudos sin styling final |
 | Prerequisito | Fase 0 completa, credenciales de Google Cloud configuradas |
