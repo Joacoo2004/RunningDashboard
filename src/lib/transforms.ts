@@ -37,6 +37,15 @@ export function formatPace(decimalMinutes: number): string {
   return `${minutes}:${seconds.toString().padStart(2, '0')}`
 }
 
+export function parsePace(value: string): number {
+  if (!value) return 0
+  const parts = value.split(':')
+  if (parts.length !== 2) return 0
+  const minutes = parseInt(parts[0], 10) || 0
+  const seconds = parseInt(parts[1], 10) || 0
+  return minutes + seconds / 60
+}
+
 export function parseActivity(row: string[]): Activity | null {
   try {
     return {
@@ -96,25 +105,22 @@ export function calcMonthlyKm(activities: Activity[]): number {
 
 export function calcAveragePace(activities: Activity[]): string {
   if (activities.length === 0) return '—'
-  
-  let totalSeconds = 0
+
+  let totalPaceMin = 0
   let totalKm = 0
 
   for (const a of activities) {
     if (a.ritmoMinKm && a.distanciaKm > 0) {
-      const [minStr, secStr = '0'] = a.ritmoMinKm.split(':')
-      const minutes = parseInt(minStr, 10) || 0
-      const seconds = parseInt(secStr, 10) || 0
-      const totalMin = minutes + seconds / 60
-      totalSeconds += totalMin * 60
-      totalKm += a.distanciaKm
+      const paceMin = parsePace(a.ritmoMinKm)
+      if (paceMin > 0) {
+        totalPaceMin += paceMin * a.distanciaKm
+        totalKm += a.distanciaKm
+      }
     }
   }
 
   if (totalKm === 0) return '—'
-  
-  const avgSecondsPerKm = totalSeconds / totalKm
-  const avgMinutes = Math.floor(avgSecondsPerKm / 60)
-  const avgSeconds = Math.round(avgSecondsPerKm % 60)
-  return `${avgMinutes}:${avgSeconds.toString().padStart(2, '0')}`
+
+  const avgPaceMin = totalPaceMin / totalKm
+  return formatPace(avgPaceMin)
 }
