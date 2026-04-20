@@ -54,3 +54,67 @@ export function parseActivity(row: string[]): Activity | null {
     return null
   }
 }
+
+function getWeekBounds(date: Date): { start: Date; end: Date } {
+  const d = new Date(date)
+  const day = d.getDay()
+  const diffToMonday = day === 0 ? -6 : 1 - day
+  const start = new Date(d)
+  start.setDate(d.getDate() + diffToMonday)
+  start.setHours(0, 0, 0, 0)
+  const end = new Date(start)
+  end.setDate(start.getDate() + 6)
+  end.setHours(23, 59, 59, 999)
+  return { start, end }
+}
+
+function getMonthBounds(date: Date): { start: Date; end: Date } {
+  const start = new Date(date.getFullYear(), date.getMonth(), 1)
+  const end = new Date(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59, 999)
+  return { start, end }
+}
+
+export function getWeekActivities(activities: Activity[], date?: Date): Activity[] {
+  const targetDate = date ?? new Date()
+  const { start, end } = getWeekBounds(targetDate)
+  return activities.filter((a) => a.fecha >= start && a.fecha <= end)
+}
+
+export function getMonthActivities(activities: Activity[], date?: Date): Activity[] {
+  const targetDate = date ?? new Date()
+  const { start, end } = getMonthBounds(targetDate)
+  return activities.filter((a) => a.fecha >= start && a.fecha <= end)
+}
+
+export function calcWeeklyKm(activities: Activity[]): number {
+  return activities.reduce((sum, a) => sum + a.distanciaKm, 0)
+}
+
+export function calcMonthlyKm(activities: Activity[]): number {
+  return activities.reduce((sum, a) => sum + a.distanciaKm, 0)
+}
+
+export function calcAveragePace(activities: Activity[]): string {
+  if (activities.length === 0) return '—'
+  
+  let totalSeconds = 0
+  let totalKm = 0
+
+  for (const a of activities) {
+    if (a.ritmoMinKm && a.distanciaKm > 0) {
+      const [minStr, secStr = '0'] = a.ritmoMinKm.split(':')
+      const minutes = parseInt(minStr, 10) || 0
+      const seconds = parseInt(secStr, 10) || 0
+      const totalMin = minutes + seconds / 60
+      totalSeconds += totalMin * 60
+      totalKm += a.distanciaKm
+    }
+  }
+
+  if (totalKm === 0) return '—'
+  
+  const avgSecondsPerKm = totalSeconds / totalKm
+  const avgMinutes = Math.floor(avgSecondsPerKm / 60)
+  const avgSeconds = Math.round(avgSecondsPerKm % 60)
+  return `${avgMinutes}:${avgSeconds.toString().padStart(2, '0')}`
+}
