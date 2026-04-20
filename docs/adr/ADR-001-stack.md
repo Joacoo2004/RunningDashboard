@@ -19,11 +19,11 @@ Se necesita un stack para construir un dashboard web personal de análisis de ru
 | React + Vite | Sin SSR nativo, más configuración manual para deploy |
 | Remix | Curva de aprendizaje mayor, ecosistema más chico |
 | Vue / Nuxt | Sin experiencia previa, no aporta ventaja sobre Next.js |
-| **Next.js 15 + TypeScript** | **Seleccionado** |
+| **Next.js 15.2.4 + TypeScript** | **Seleccionado** |
 
 ## Decisión
 
-**Next.js 15 con TypeScript estricto.**
+**Next.js 15.2.4 con TypeScript estricto.**
 
 - App Router para estructura de rutas y layouts
 - Server Components para el fetch de datos (Google Sheets API se llama server-side)

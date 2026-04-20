@@ -22,7 +22,7 @@ Spec-Driven Development (SDD).
 
 | Tecnología | Versión | Uso |
 |------------|---------|-----|
-| Next.js | 15 | Framework principal, App Router |
+| Next.js | 15.2.4 | Framework principal, App Router |
 | TypeScript | 5.x | Estricto (`strict: true`) |
 | Tailwind CSS | 3.x | Estilos |
 | Recharts | 2.x | Gráficos |
