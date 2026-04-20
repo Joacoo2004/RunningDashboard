@@ -122,7 +122,8 @@ Abrí [http://localhost:3000](http://localhost:3000) en el navegador.
 
 El proyecto hace deploy automático en Vercel en cada push a `main`. Las variables de entorno están configuradas en el panel de Vercel — no en el repo.
 
-**URL de producción:** _se agrega al completar la Fase 1_
+**URL de producción:** 
+https://running-dashboard-virid.vercel.app
 
 ---
 
