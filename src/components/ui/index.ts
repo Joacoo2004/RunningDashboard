@@ -1,1 +1,1 @@
-export {}
+export { SessionBadge } from './session-badge'
