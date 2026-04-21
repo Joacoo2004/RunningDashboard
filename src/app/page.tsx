@@ -1,6 +1,8 @@
 import { getActivities } from '@/lib/sheets'
 import { getWeekActivities, getMonthActivities, calcWeeklyKm, calcMonthlyKm, calcAveragePace } from '@/lib/transforms'
 import { KpiCard } from '@/components/cards/kpi-card'
+import { WeeklyView } from '@/components/cards/weekly-view'
+import { SessionsTable } from '@/components/cards/sessions-table'
 
 export default async function Home() {
   const activities = await getActivities()
@@ -14,8 +16,14 @@ export default async function Home() {
   const sessionsThisWeek = weekActivities.length
 
   return (
-    <main>
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <main className="max-w-5xl mx-auto px-4 py-8 space-y-10">
+      <header>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          Running Dashboard
+        </h1>
+      </header>
+
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <KpiCard
           label="Km esta semana"
           value={kmThisWeek > 0 ? kmThisWeek : '—'}
@@ -38,32 +46,19 @@ export default async function Home() {
         />
       </section>
 
-      {activities.length === 0 ? (
-        <p>No hay actividades</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Nombre</th>
-              <th>Distancia</th>
-              <th>Ritmo</th>
-              <th>Tipo de sesión</th>
-            </tr>
-          </thead>
-          <tbody>
-            {activities.map((activity) => (
-              <tr key={activity.id}>
-                <td>{activity.fecha.toLocaleDateString('es-AR')}</td>
-                <td>{activity.nombre}</td>
-                <td>{activity.distanciaKm} km</td>
-                <td>{activity.ritmoMinKm}</td>
-                <td>{activity.tipoSesion}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <section className="space-y-3">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+          Vista semanal
+        </h2>
+        <WeeklyView activities={activities} />
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+          Sesiones recientes
+        </h2>
+        <SessionsTable activities={activities} />
+      </section>
     </main>
   )
 }
