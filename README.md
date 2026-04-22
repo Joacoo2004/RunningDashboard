@@ -78,10 +78,10 @@ RunningDashboard/
 | Fase | Contenido | Estado |
 |------|-----------|--------|
 | 0 | Setup & Documentación completa | ✅ Completa |
-| 1 | Esqueleto & Conexión a Google Sheets | ⬜ Pendiente |
-| 2 | KPI Cards & Vista semanal | ⬜ Pendiente |
-| 3 | Comparaciones & Tendencia de ritmo | ⬜ Pendiente |
-| 4 | Polish & Deploy estable | ⬜ Pendiente |
+| 1 | Esqueleto & Conexión a Google Sheets | ✅ Completa |
+| 2 | KPI Cards & Vista semanal | ✅ Completa |
+| 3 | Comparaciones & Tendencia de ritmo | ✅ Completa |
+| 4 | Polish & Deploy estable | ✅ Completa |
 
 ---
 

@@ -181,9 +181,9 @@ chore: descripción       ← setup, dependencias, config
 
 ## Fase actual
 
-**FASE 0 — Setup & Documentación** (en curso)
+**FASE 0 — Setup & Documentación** (completada)
 
 Documentación completa antes de escribir código de negocio.
 Ver `phases/PHASE-0.md` para el detalle de qué incluye esta fase.
 
-Próxima fase: **FASE 1 — Esqueleto & Conexión de datos**
+Próxima fase: **FASE 1 — Esqueleto & Conexión de datos** (completada)
