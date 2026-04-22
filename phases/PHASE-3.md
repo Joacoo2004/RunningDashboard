@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |-------|-------|
-| Estado | ⬜ Pendiente |
+| Estado | ✅ Completa |
 | Objetivo | Agregar los tres gráficos principales al dashboard |
 | Entregable | Dashboard con comparaciones semanales, mensuales y tendencia de ritmo |
 | Prerequisito | Fase 2 completa |
