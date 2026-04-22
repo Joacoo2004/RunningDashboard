@@ -1,9 +1,15 @@
+'use client'
+
+import { useState } from 'react'
 import type { Activity } from '@/types/activity'
 import { SessionBadge } from '@/components/ui/session-badge'
 
 interface WeeklyViewProps {
   activities: Activity[]
-  weekOffset?: number
+}
+
+interface WeeklyViewProps {
+  activities: Activity[]
 }
 
 function getWeekBounds(offset: number): { start: Date; end: Date } {
@@ -52,14 +58,30 @@ function getWeekActivities(activities: Activity[], start: Date, end: Date): Acti
     .sort((a, b) => a.fecha.getTime() - b.fecha.getTime())
 }
 
-export function WeeklyView({ activities, weekOffset = 0 }: WeeklyViewProps) {
+export function WeeklyView({ activities }: WeeklyViewProps) {
+  const [weekOffset, setWeekOffset] = useState(0)
   const { start, end } = getWeekBounds(weekOffset)
   const weekActivities = getWeekActivities(activities, start, end)
 
   return (
     <div className="space-y-3">
-      <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
-        {formatWeekRange(start, end)}
+      <div className="flex items-center justify-between">
+        <button
+          onClick={() => setWeekOffset((w) => w - 1)}
+          className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+        >
+          ←
+        </button>
+        <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+          {formatWeekRange(start, end)}
+        </div>
+        <button
+          onClick={() => setWeekOffset((w) => w + 1)}
+          disabled={weekOffset === 0}
+          className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+        >
+          →
+        </button>
       </div>
 
       {weekActivities.length === 0 ? (
