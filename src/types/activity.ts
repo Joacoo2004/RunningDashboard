@@ -11,3 +11,27 @@ export interface Activity {
   intervalos: string | null
   tipoSesion: SessionType
 }
+
+export interface WeeklyKmPoint {
+  semana: string
+  label: string
+  km: number
+  sesiones: number
+  isCurrent: boolean
+}
+
+export interface MonthlyKmPoint {
+  mes: string
+  label: string
+  km: number
+  sesiones: number
+  isCurrent: boolean
+}
+
+export interface PaceTrendPoint {
+  fecha: string
+  Base?: number
+  'Long Run'?: number
+  Intervalos?: number
+  'Sin clasificar'?: number
+}
