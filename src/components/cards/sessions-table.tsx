@@ -45,6 +45,16 @@ export function SessionsTable({ activities }: SessionsTableProps) {
   const displayedActivities = sortedActivities.slice(0, visibleCount)
   const hasMore = visibleCount < sortedActivities.length
 
+  if (sortedActivities.length === 0) {
+    return (
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 text-center">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          No hay sesiones registradas
+        </p>
+      </div>
+    )
+  }
+
   const handleLoadMore = () => {
     setVisibleCount((c) => c + 10)
   }
