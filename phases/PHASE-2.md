@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |-------|-------|
-| Estado | ⬜ Pendiente |
+| Estado | ✅ Completa |
 | Objetivo | Primera versión útil del dashboard con métricas reales |
 | Entregable | Dashboard deployado con KPI cards y vista semanal funcional |
 | Prerequisito | Fase 1 completa — datos llegando correctamente desde Google Sheets |
