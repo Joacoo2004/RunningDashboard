@@ -1,8 +1,11 @@
 import { getActivities } from '@/lib/sheets'
-import { getWeekActivities, getMonthActivities, calcWeeklyKm, calcMonthlyKm, calcAveragePace } from '@/lib/transforms'
+import { getWeekActivities, getMonthActivities, calcWeeklyKm, calcMonthlyKm, calcAveragePace, getWeeklyKmData, getMonthlyKmData, getPaceTrendData } from '@/lib/transforms'
 import { KpiCard } from '@/components/cards/kpi-card'
 import { WeeklyView } from '@/components/cards/weekly-view'
 import { SessionsTable } from '@/components/cards/sessions-table'
+import { WeeklyKmChart } from '@/components/charts/weekly-km-chart'
+import { MonthlyKmChart } from '@/components/charts/monthly-km-chart'
+import { PaceTrendChart } from '@/components/charts/pace-trend-chart'
 
 export default async function Home() {
   const activities = await getActivities()
@@ -14,6 +17,10 @@ export default async function Home() {
   const kmThisMonth = calcMonthlyKm(monthActivities)
   const avgPaceThisWeek = calcAveragePace(weekActivities)
   const sessionsThisWeek = weekActivities.length
+
+  const weeklyKmData = getWeeklyKmData(activities)
+  const monthlyKmData = getMonthlyKmData(activities)
+  const paceTrendData = getPaceTrendData(activities)
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-8 space-y-10">
@@ -44,6 +51,23 @@ export default async function Home() {
           value={sessionsThisWeek > 0 ? sessionsThisWeek : '—'}
           unit="salidas"
         />
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+          Progreso
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+            <WeeklyKmChart data={weeklyKmData} />
+          </div>
+          <div className="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+            <MonthlyKmChart data={monthlyKmData} />
+          </div>
+        </div>
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+          <PaceTrendChart data={paceTrendData} />
+        </div>
       </section>
 
       <section className="space-y-3">
