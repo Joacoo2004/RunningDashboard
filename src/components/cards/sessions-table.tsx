@@ -1,6 +1,8 @@
+'use client'
+
+import { useState } from 'react'
 import type { Activity } from '@/types/activity'
 import { SessionBadge } from '@/components/ui/session-badge'
-import { formatPace } from '@/lib/transforms'
 
 interface SessionsTableProps {
   activities: Activity[]
@@ -35,9 +37,17 @@ function formatElevacion(meters: number): string {
 }
 
 export function SessionsTable({ activities }: SessionsTableProps) {
+  const [visibleCount, setVisibleCount] = useState(10)
+
   const sortedActivities = [...activities]
     .sort((a, b) => b.fecha.getTime() - a.fecha.getTime())
-    .slice(0, 10)
+
+  const displayedActivities = sortedActivities.slice(0, visibleCount)
+  const hasMore = visibleCount < sortedActivities.length
+
+  const handleLoadMore = () => {
+    setVisibleCount((c) => c + 10)
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -54,7 +64,7 @@ export function SessionsTable({ activities }: SessionsTableProps) {
           </tr>
         </thead>
         <tbody>
-          {sortedActivities.map((activity) => (
+          {displayedActivities.map((activity) => (
             <tr
               key={activity.id}
               className="border-b border-gray-100 hover:bg-gray-50"
@@ -80,6 +90,16 @@ export function SessionsTable({ activities }: SessionsTableProps) {
           ))}
         </tbody>
       </table>
+      {hasMore && (
+        <div className="mt-4 text-center">
+          <button
+            onClick={handleLoadMore}
+            className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+          >
+            Ver más
+          </button>
+        </div>
+      )}
     </div>
   )
 }
