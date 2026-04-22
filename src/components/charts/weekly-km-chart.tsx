@@ -22,10 +22,10 @@ function CustomTooltip({ active, payload, label }: { active?: boolean; payload?:
   const data = payload[0]
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm text-sm">
-      <p className="font-medium text-gray-900 mb-1">{label}</p>
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 shadow-sm text-sm">
+      <p className="font-medium text-gray-900 dark:text-gray-100 mb-1">{label}</p>
       <p style={{ color: '#3b82f6' }}>{data?.value} km</p>
-      <p className="text-gray-500">{data?.value > 0 ? '1' : '0'} sesión(es)</p>
+      <p className="text-gray-500 dark:text-gray-400">{data?.value > 0 ? '1' : '0'} sesión(es)</p>
     </div>
   )
 }
