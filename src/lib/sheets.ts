@@ -23,6 +23,8 @@ export async function getActivities(): Promise<Activity[]> {
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
       range: RANGE,
+    }, {
+      next: { revalidate: 3600 },
     })
 
     const rows = response.data.values
